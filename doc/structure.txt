@@ -1,0 +1,195 @@
+# ESTRUCTURE
+src/app/
+├── core/
+├── shared/
+├── layout/
+├── features/
+│   ├── auth/
+│   ├── users/
+│   └── movies/
+
+----------
+
+src/
+│
+├── app/
+│   ├── core/
+│   ├── shared/
+│   ├── features/
+│   ├── layout/
+│   ├── app.routes.ts
+│   └── app.config.ts
+│
+├── assets/
+├── environments/
+├── styles/
+└── main.ts
+
+----------
+
+core/
+├── services/
+├── guards/
+├── interceptors/
+├── models/
+└── core.module.ts (opcional en versiones nuevas)
+
+----------
+
+shared/
+├── components/
+├── directives/
+├── pipes/
+├── models/
+└── utils/
+
+----------
+
+features/
+├── auth/
+│   ├── pages/
+│   ├── components/
+│   ├── services/
+│   ├── auth.routes.ts
+│
+├── dashboard/
+│   ├── pages/
+│   ├── components/
+│   ├── services/
+│
+├── users/
+│   ├── pages/
+│   ├── components/
+│   ├── services/
+│   ├── models/
+│   ├── users.routes.ts
+
+----------
+
+layout/
+├── header/
+├── sidebar/
+├── footer/
+├── layout.component.ts
+
+----------
+
+assets/
+├── images/
+├── icons/
+├── fonts/
+└── i18n/
+
+----------
+
+environments/
+├── environment.ts
+├── environment.prod.ts
+
+----------
+
+styles/
+├── base/
+├── components/
+├── themes/
+└── styles.scss
+
+----------
+
+app.routes.ts
+
+
+
+
+# CREATE PROJECT
+ng new cine-app
+cd cine-app
+
+
+
+
+# CORE
+ng generate service core/services/auth
+ng generate service core/services/api
+ng generate interceptor core/interceptors/auth
+ng generate guard core/guards/auth
+ng generate interface core/models/user
+
+
+
+
+# SHARED
+ng generate component shared/components/button
+ng generate component shared/components/modal
+ng generate directive shared/directives/highlight
+ng generate pipe shared/pipes/dateFormat
+
+
+
+
+# LAYOUT
+ng generate component layout/header
+ng generate component layout/sidebar
+ng generate component layout/footer
+ng generate component layout/main-layout
+
+
+
+
+# FEATURES
+--> Auth
+ng generate component features/auth/pages/login
+ng generate component features/auth/pages/register
+ng generate service features/auth/services/auth
+
+--> Users
+ng generate component features/users/pages/user-list
+ng generate component features/users/pages/user-detail
+ng generate component features/users/components/user-card
+ng generate service features/users/services/users
+ng generate interface features/users/models/user
+
+--> Movies
+ng generate component features/movies/pages/movie-list
+ng generate component features/movies/pages/movie-detail
+ng generate component features/movies/components/movie-card
+ng generate service features/movies/services/movies
+ng generate interface features/movies/models/movie
+
+--> Routing
+touch src/app/features/auth/auth.routes.ts
+touch src/app/features/users/users.routes.ts
+touch src/app/features/movies/movies.routes.ts
+
+
+
+
+# ASSETS
+mkdir -p src/assets/images
+mkdir -p src/assets/icons
+mkdir -p src/assets/fonts
+
+
+
+
+# STYLES
+mkdir -p src/styles/base
+mkdir -p src/styles/components
+mkdir -p src/styles/themes
+touch src/styles/_variables.scss
+touch src/styles/_mixins.scss
+
+
+
+
+# ENVIRONMENTS
+ng generate environments
+
+
+
+
+# BONUS
+ng add @angular-eslint/schematics
+ng add @ngrx/store
+ng add @ngrx/effects
+ng add @ngrx/store-devtools

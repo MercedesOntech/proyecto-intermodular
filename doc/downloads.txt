@@ -1,0 +1,28 @@
+npm install -g @angular/cli
+
+# git
+
+ng add @angular/material
+
+npm install -g json-server
+
+json-server --watch db.json
+
+npm init -y
+npm install express cors body-parser
+
+ng add @ngrx/store
+ng add @ngrx/effects
+ng add @ngrx/store-devtools
+
+npm install jasmine karma --save-dev
+
+ng add @angular-eslint/schematics
+
+npm install jwt-decode
+npm install date-fns
+npm install uuid
+
+npm install print-js
+
+npm install bootstrap
