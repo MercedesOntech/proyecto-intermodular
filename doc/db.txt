@@ -89,7 +89,6 @@
 - type (acción, aventura, comedia, drama, terror, ciencia ficción, fantasía, suspense, misterio, romance, animación, documental, musical, histórico, bélico, western, crimen)
 
 
-
 --> ROOM
 - id (autogenerado)
 - name (sala 1, sala2, etc)
