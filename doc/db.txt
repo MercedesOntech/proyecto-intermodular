@@ -1,0 +1,125 @@
+--> USERTYPE
+- id (autogenerado)
+- name (admin, employee, client)
+
+
+--> USER
+- id (autogenerado)
+- name
+- age
+- email (admin@gmail.com, nombreEmpleadoROMERO@gmail.com, ...)
+- dni
+- userName
+- password
+- phone
+- userTypeId --> FK
+- List<BarTicket> --> FK
+- List<FilmTicket> --> FK
+- ticketId --> FK
+
+
+--> TARJET
+- id (autogenerado)
+- number (count = 16)
+- money (cuánto tiene)
+- expiry (+hoy)
+
+
+--> BARTICKET
+- id (autogenerado)
+- dateTicket
+- userId --> FK
+- List<BarProduct> --> FK
+
+
+--> PRODUCT
+- id (autogenerado)
+- name
+- price
+
+
+--> FILMTICKET
+- id (autogenerado)
+- dateTicket
+- ticketScheduleId --> FK
+- List<Chair> --> FK
+- roomId --> FK
+- filmId --> FK
+
+
+--> FILM
+- id (autogenerado)
+- name
+- description
+- releaseDate (- mañana = - (hoy+1))
+- List<FilmDirector> --> FK
+- List<FilmActor> --> FK
+- fimTypeId --> FK
+- List<FilmGenre> --> FK
+- roomId --> FK
+
+
+--> DIRECTOR
+- id (autogenerado)
+- name
+
+
+--> FILMDIRECTOR
+- id (autogenerado)
+- directorId --> FK
+
+
+--> ACTOR
+- id (autogenerado)
+- name
+
+
+--> FILMACTOR
+- id (autogenerado)
+- actorId --> FK
+
+
+--> FILMTYPE
+- id (autogenerado)
+- type (2D, 3D)
+
+
+--> GENRE
+- id (autogenerado)
+- type (acción, aventura, comedia, drama, terror, ciencia ficción, fantasía, suspense, misterio, romance, animación, documental, musical, histórico, bélico, western, crimen)
+
+
+
+--> ROOM
+- id (autogenerado)
+- name (sala 1, sala2, etc)
+
+
+--> CHAIR
+- id (autogenerado)
+- chairTypeId --> FK
+
+
+--> CHAIRTYPE
+- id (autogenerado)
+- type (VIP, Normal, Discapacitados)
+
+
+--> SCHEDULE
+- id (autogenerado)
+- timeSchedule (en un principio es String)
+
+
+--> BARPRODUCT
+- id (autogenerado)
+- productId --> FK
+
+
+--> FILMGENRE
+- id (autogenerado)
+- genreId --> FK
+
+
+--> TICKETSCHEDULE
+- id (autogenerado)
+- scheduleId --> FK
