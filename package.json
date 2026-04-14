@@ -7,32 +7,68 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:proyecto-intermodular-Mercedes-Romero": "node dist/proyecto-intermodular-Mercedes-Romero/server/server.mjs"
+    "serve:ssr:proyecto-intermodular-Mercedes-Romero": "node dist/proyecto-intermodular-Mercedes-Romero/server/server.mjs",
+    "lint": "ng lint"
   },
   "private": true,
   "packageManager": "npm@11.12.1",
   "dependencies": {
+    "@angular/cdk": "^21.2.6",
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",
     "@angular/core": "^21.2.0",
     "@angular/forms": "^21.2.0",
+    "@angular/material": "^21.2.6",
     "@angular/platform-browser": "^21.2.0",
     "@angular/platform-server": "^21.2.0",
     "@angular/router": "^21.2.0",
     "@angular/ssr": "^21.2.6",
-    "express": "^5.1.0",
+    "@ngrx/effects": "^21.1.0",
+    "@ngrx/store": "^21.1.0",
+    "@ngrx/store-devtools": "^21.1.0",
+    "body-parser": "^2.2.2",
+    "bootstrap": "^5.3.8",
+    "cors": "^2.8.6",
+    "date-fns": "^4.1.0",
+    "express": "^5.2.1",
+    "jwt-decode": "^4.0.0",
+    "print-js": "^1.6.0",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@angular/build": "^21.2.6",
     "@angular/cli": "^21.2.6",
     "@angular/compiler-cli": "^21.2.0",
+    "@eslint/js": "^10.0.1",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
+    "angular-eslint": "21.3.1",
+    "eslint": "^10.0.3",
+    "jasmine": "^6.2.0",
     "jsdom": "^28.0.0",
+    "karma": "^6.4.4",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",
+    "typescript-eslint": "8.56.1",
     "vitest": "^4.0.8"
-  }
+  },
+  "description": "This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.6.",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MercedesOntech/proyecto-intermodular.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MercedesOntech/proyecto-intermodular/issues"
+  },
+  "homepage": "https://github.com/MercedesOntech/proyecto-intermodular#readme"
 }

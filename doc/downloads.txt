@@ -26,3 +26,5 @@ npm install uuid
 npm install print-js
 
 npm install bootstrap
+
+npm install
