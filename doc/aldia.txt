@@ -1,0 +1,502 @@
+UTILIZO ANGULAR 21 (NUEVA ESTRUCTURA)
+
+yo tengo esta estructura en src: 
+C:.
+├───app
+│   ├───core
+│   │   ├───guards
+│   │   ├───interceptors
+│   │   ├───models
+│   │   └───services
+│   ├───features
+│   │   ├───auth
+│   │   │   ├───pages
+│   │   │   │   ├───login
+│   │   │   │   └───register
+│   │   │   └───services
+│   │   ├───movies
+│   │   │   ├───components
+│   │   │   │   └───movie-card
+│   │   │   ├───models
+│   │   │   ├───pages
+│   │   │   │   ├───movie-detail
+│   │   │   │   └───movie-list
+│   │   │   └───services
+│   │   └───users
+│   │       ├───components
+│   │       │   └───user-card
+│   │       ├───models
+│   │       ├───pages
+│   │       │   ├───user-detail
+│   │       │   └───user-list
+│   │       └───services
+│   ├───layout
+│   │   ├───footer
+│   │   ├───header
+│   │   ├───main-layout
+│   │   └───sidebar
+│   └───shared
+│       ├───components
+│       │   ├───button
+│       │   └───modal
+│       ├───directives
+│       └───pipes
+└───environments
+
+
+
+
+
+estructura importante completa:
+C:.
+├───backend
+└───doc
+└───angular.json
+└───src
+
+
+y esta es mi bd:
+-- MySQL Script corrected
+-- Cinema Project FINAL VERSION
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+CREATE SCHEMA IF NOT EXISTS `cinema_project` DEFAULT CHARACTER SET utf8 ;
+USE `cinema_project` ;
+
+-- -----------------------------------------------------
+-- USER TYPE
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `user_type` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- TARJET
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tarjet` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `number` INT NULL,
+  `money` DECIMAL(10,2) NULL,
+  `expiry` DATE NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- USER
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `age` INT NULL,
+  `email` VARCHAR(45) NULL,
+  `dni` VARCHAR(45) NULL,
+  `userName` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NULL,
+  `phone` INT NULL,
+  `user_type_id` INT NOT NULL,
+  `tarjet_id` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_user_user_type_idx` (`user_type_id`),
+  INDEX `fk_user_tarjet_idx` (`tarjet_id`),
+  CONSTRAINT `fk_user_user_type`
+    FOREIGN KEY (`user_type_id`)
+    REFERENCES `user_type` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_user_tarjet`
+    FOREIGN KEY (`tarjet_id`)
+    REFERENCES `tarjet` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- BAR TICKET
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bar_ticket` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `dateTicket` DATE NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_bar_ticket_user_idx` (`user_id`),
+  CONSTRAINT `fk_bar_ticket_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- PRODUCT
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `product` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `price` DECIMAL(10,2) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- BAR TICKET - PRODUCT (M:N)
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `product_has_bar_ticket` (
+  `product_id` INT NOT NULL,
+  `bar_ticket_id` INT NOT NULL,
+  PRIMARY KEY (`product_id`, `bar_ticket_id`),
+  CONSTRAINT `fk_pt_product`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `product` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_pt_bar_ticket`
+    FOREIGN KEY (`bar_ticket_id`)
+    REFERENCES `bar_ticket` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- ROOM
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `room` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- FILM TYPE
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `film_type` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- FILM
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `film` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `description` VARCHAR(45) NULL,
+  `releaseDate` DATE NULL,
+  `room_id` INT NOT NULL,
+  `film_type_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_film_room`
+    FOREIGN KEY (`room_id`)
+    REFERENCES `room` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_film_type`
+    FOREIGN KEY (`film_type_id`)
+    REFERENCES `film_type` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- FILM TICKET
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `film_ticket` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `dateTicket` DATE NULL,
+  `user_id` INT NOT NULL,
+  `film_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_ft_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_ft_film`
+    FOREIGN KEY (`film_id`)
+    REFERENCES `film` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- SCHEDULE
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `schedule` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `timeSchedule` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- FILM TICKET - SCHEDULE
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `film_ticket_has_schedule` (
+  `film_ticket_id` INT NOT NULL,
+  `schedule_id` INT NOT NULL,
+  PRIMARY KEY (`film_ticket_id`, `schedule_id`),
+  CONSTRAINT `fk_fth_ft`
+    FOREIGN KEY (`film_ticket_id`)
+    REFERENCES `film_ticket` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_fth_schedule`
+    FOREIGN KEY (`schedule_id`)
+    REFERENCES `schedule` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- CHAIR TYPE
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `chair_type` (
+  `id` INT NOT NULL,
+  `type` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- CHAIR
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `chair` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `film_ticket_id` INT NOT NULL,
+  `chair_type_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_chair_ft`
+    FOREIGN KEY (`film_ticket_id`)
+    REFERENCES `film_ticket` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_chair_type`
+    FOREIGN KEY (`chair_type_id`)
+    REFERENCES `chair_type` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- GENRE
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `genre` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- DIRECTOR
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `director` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- ACTOR
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `actor` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- FILM_HAS_GENRE
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `film_has_genre` (
+  `film_id` INT NOT NULL,
+  `genre_id` INT NOT NULL,
+  PRIMARY KEY (`film_id`, `genre_id`),
+  CONSTRAINT `fk_fhg_film`
+    FOREIGN KEY (`film_id`)
+    REFERENCES `film` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_fhg_genre`
+    FOREIGN KEY (`genre_id`)
+    REFERENCES `genre` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- FILM_HAS_DIRECTOR
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `film_has_director` (
+  `film_id` INT NOT NULL,
+  `director_id` INT NOT NULL,
+  PRIMARY KEY (`film_id`, `director_id`),
+  CONSTRAINT `fk_fhd_film`
+    FOREIGN KEY (`film_id`)
+    REFERENCES `film` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_fhd_director`
+    FOREIGN KEY (`director_id`)
+    REFERENCES `director` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- FILM_HAS_ACTOR
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `film_has_actor` (
+  `film_id` INT NOT NULL,
+  `actor_id` INT NOT NULL,
+  PRIMARY KEY (`film_id`, `actor_id`),
+  CONSTRAINT `fk_fha_film`
+    FOREIGN KEY (`film_id`)
+    REFERENCES `film` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_fha_actor`
+    FOREIGN KEY (`actor_id`)
+    REFERENCES `actor` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+
+
+
+
+algunas de las funciones q si o si se debe cumplir:
+1º
+siempre empieza en home, y algunas de las muchas cosas a mostrar es dos carruseles, uno de peliculas y otro de comidas
+
+2º
+header escon un menu y si no has iniciado sesion pone registrarse o iniciar sesion y si te has registrado pone una imagen con efecto redondel al q si le dejas pulsado encima se despliega un submenu en el q tienes dos opciones : cerrar sesión o ajustes  oregistrar tarjeta
+ademas, incluye un navbar, una lupa para buscar cuanquier cosa, mi logo (imagen) tambien con efecto redondel y el nombre d ela empresa "ROMERO"
+
+3º
+navbar tiene si eres client : inicio | peliculas | bar | comentarios
+en caso de q seas employee: "client" + | registrar pelicula | registrar bar
+en caso de q seas admin: "client" + "employee" + | añadir usuario | ver usuarios
+
+4º
+footer tiene:
++34 658 674 631                 |                       |   Términos y condiciones
+                                |   3 redes sociales    |
+mercedesromeroweb@gmail.com     |                       |   Política de privacidad
+----------------------------------------------------------------------------------
+Términos y condiciones y Política de privacidad --> ambos son archivos descargables
+3 redes sociales --> instagram: https://www.instagram.com/mercedesromeroweb/, facebook: https://www.facebook.com/profile.php?id=61586554689664&sk, x(twiter): https://x.com/RomeroPelis
+
+5º
+Se validará si un suaurio existe o no existe.
+En caso de q ya exista, mostrar un mensaje y redirigir al inicio de sesion
+En caso de que no exista el usuario a registrar, se validan si todos los datos insertados son correctos (cumplen con las normas) y se crea el usuario
+
+6º
+para registrar a unapersona queremos : fecha de nacimiento, nombre y apellidos , nombre q se le quiera poner al usuario y no puede ser repetido, correo electronico, telefono, contraseña, confirmar contraseña, boton en el q acepte politica de privacidad y a su vez el mensajetendra un descargable del documento de politica de privacidad y el boton de registrar
+para q la contraseña sea segura, debe tener al menos una mayuscura , una minuscula, un numero y un caracter especial
+se validara si eres mayor de edad (en caso afirmativo te puedes registrar , en caso contrario no puedes)
+el numero de telefono tiene una lista desplegable para tu elegir el prefijo
+el confirmar contraseña debe ser igual a la contraseña anterior
+hasta que no se marque la casilla de aceptar politica de privacidad, ns puede regisrar.
+
+7º
+ajustes: pone todos los datos del usuario y puede cambiarlos
+
+8º
+al principio cuando estas en home y no has iniciado sesión, y tocas algo de ahi, te redirige directamente a la pagina de iniciara sesion
+en caso de haber iniciado sesión, puedes navegar tranquilamente por la web
+
+9º
+inicio de sesión: email y contraseña + boton de inciio de sesion y un mensaje abajo de ¿Todavia no has iniciado sesión?, q si lo pulsas, te redirige a registrarse
+
+10º
+existen 3 usuarios:
+--> client: el usuario normal con el q tu te registras 
+--> employee: te da de alta el administrador y solo tienes permisos para la administracion de peliculas y del bar y admemas puedes ver todo lo de client
+--> admin: tiene todos los permisos anteriores , ademas de administrar a los usuarios (employee como client)
+
+11º
+para q el administrador cree un perfil, debe tener los mismos datos q si fuese un registro normal, pero tambien queremos saber (lista desplegable) q tipo de usuarios es: cliente o trabajador
+
+12º
+navbar: en caso de pulsar peliculas, redirige a la pagina de film , en el cual se muestran muchas cosas, ej: carrusel de peliculas tipo auncio
+abajo se mostraran todas las peliculas de la semana
+segun q dia pulses se mostraran unas pelis u otras
+al pulsar alguna pelicula, se mostraran los datos de la misma
+en peliculas se deben ver los horarios de cada una , segun cual pulses te mostra una reserva u otra
+--------------------------------------------------------------------------
+                         IMAGINATE UN CARRUSEL
+---------------------------------------------------------
+|   L   |   M   |   X   |   J   |   V   |   S   |   D   |
+---------------------------------------------------------
+
+foto.pelicula   13:56 - 15:05  3D
+                15:00 - 16:09  2D
+                etc
+
+.
+.
+.
+
+segun q horario pulses, agunas butacas estaran libres o no
+
+---------------------------------------------------------------------------
+                        |PANTALLA|
+                        ----------
+
+                        imaginate un mapa de los asientos
+
+                        SIGUIENTE
+
+los q esten en amarillo es pq sin vip
+los q esten en naranja es pq son minusvalidos
+los q esten en azul es pq ya estan cojidos
+
+el boton siguiente es para pagarlo todo
+
+13º
+para mostrar los datos de una pelicula, se muestra el nombre de la pelicula , la duracion, los  directores , los actores, un video trailer, una foto, una descripcion, la fecha de estreno, el genero
+
+14º
+recuerso q para las peliculas debe haber un formulario el cual debe cumplir todos los requisitos (incluyendo lo de 2d y 3d)
+
+15º
+para pagar cualquier cosa, mostrara el importe y debe insertar el numero de la tarjeta q previamente debe estar registrada, en caso de no estarlo, redirige directamente a la pagina de registrar tarjeta
+
+16º
+para registrar una tarjeta queremos saber , el numero de la tejeta, la cantidad de dinero q tiene la tarjeta y la fecha de caducidad de la tarjeta
+
+17º
+recuerda q quiero un buscador en el header
+
+18º
+el bar es mas o menpos lo mismo q el apartado de peliculas, a diferencia q lo productos tienen la foto abajo el nombre, abajo del nombre el precio, abajo del precio un contador de mas o menos, y ademas lo tipico q abaj de la web tenga el boton de comprar
+
+19º
+todos las compras se mandan por correo del usuario
+
+20º
+para registrar un producto, queremos saber el nombre, el precio y una foto
+
+21º
+a los administradores y a los trabajadores, les apareceran en las paginas de administracion de pelculas como de bar , unas tablas con las peliculas o los productos del bar, donde pueden añadir otros, modificar el q se elija o borrar
+
+22º
+el administrador podrá ver como en administracion de peliculas y bar, la lista de usuarios para administrar de la misma forma 
+
+23º
+en el apartado de comentarios, los suuarios interactuan, mostrando asi el nombre con un simbolo (todos tienen el mismo símbolo q es el del circulito con forma de humano) y el mensaje
+
+
+
+
+
+
+lo unico q me falta es completar el src
+
+dentro de src tengo completado: environments, ahora quiero q me digas q pondrias en core (LO QUIERO TODO COMPLETO) 
