@@ -1,2 +1,29 @@
 ## PARA GRABAR TODO SE UTILIZARÁ LA APLICACIÓN PARA WINDOWS --> OBS ##
 
+## PARA LA BD UTILIZARÉ MYSQL ##
+
+## EJEMPLO DE LISTA EN MODEL ##
+export interface UserType {
+  id: number;
+  name: string;
+
+  users?: User[];
+}
+
+## EJEMPLO DE ID --> FK EN MODEL ##
+export interface User {
+  id: number;
+  name: string;
+  userTypeId: number;
+}
+
+## PARA COMPROBAR SI SE CONECTA ADECUADAMENTE A LA BD: node server.js --> C:\Users\mercedes.romero\Desktop\proyecto-intermodular\backend> node server.js ##
+
+## 
+BREVE EXPLICACIÓN DE CÓMO SE VA A DIVIDIR EL PROYECTO:
+      Angular
+        ↓
+      Node.js
+        ↓
+      MySQL
+##

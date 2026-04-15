@@ -29,7 +29,7 @@ npm install bootstrap
 
 npm install
 
-npm install express mysql2 cors
+npm install express mysql cors
 
-
-# MYSQL #
+npm uninstall mysql
+npm install mysql2
