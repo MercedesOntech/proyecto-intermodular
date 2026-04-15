@@ -13,9 +13,9 @@
 - password
 - phone
 - userTypeId --> FK
-- List<BarTicket> --> FK
-- List<FilmTicket> --> FK
-- ticketId --> FK
+- List<BarTicket> --> FK    ?
+- List<FilmTicket> --> FK   ?
+- ticketId --> FK   ?
 
 
 --> TARJET
@@ -122,3 +122,189 @@
 --> TICKETSCHEDULE
 - id (autogenerado)
 - scheduleId --> FK
+
+
+
+
+--------------------
+
+
+
+
+# USERTYPE #
+CREATE TABLE user_type (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+
+# USER #
+CREATE TABLE user (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  age INT,
+  email VARCHAR(100),
+  dni VARCHAR(20),
+  userName VARCHAR(50),
+  password VARCHAR(255),
+  phone VARCHAR(20),
+  userTypeId INT,
+  FOREIGN KEY (userTypeId) REFERENCES user_type(id)
+);
+
+
+# TARJET #
+CREATE TABLE tarjet (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  number CHAR(16),
+  money DECIMAL(10,2),
+  expiry DATE,
+  userId INT,
+  FOREIGN KEY (userId) REFERENCES user(id)
+);
+
+
+# PRODUCT #
+CREATE TABLE product (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  price DECIMAL(10,2)
+);
+
+
+# BARTICKET #
+CREATE TABLE bar_ticket (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  dateTicket DATE,
+  userId INT,
+  FOREIGN KEY (userId) REFERENCES user(id)
+);
+
+
+# BARPRODUCT #
+CREATE TABLE bar_product (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  barTicketId INT,
+  productId INT,
+  FOREIGN KEY (barTicketId) REFERENCES bar_ticket(id),
+  FOREIGN KEY (productId) REFERENCES product(id)
+);
+
+
+# FILM #
+CREATE TABLE film (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  description TEXT,
+  releaseDate DATE
+);
+
+
+# FILMTICKET #
+CREATE TABLE film_ticket (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  dateTicket DATE,
+  userId INT,
+  filmId INT,
+  FOREIGN KEY (userId) REFERENCES user(id),
+  FOREIGN KEY (filmId) REFERENCES film(id)
+);
+
+
+# ACTOR #
+CREATE TABLE actor (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100)
+);
+
+
+# DIRECTOR #
+CREATE TABLE director (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100)
+);
+
+
+# FILM-ACTOR #
+CREATE TABLE film_actor (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  filmId INT,
+  actorId INT,
+  FOREIGN KEY (filmId) REFERENCES film(id),
+  FOREIGN KEY (actorId) REFERENCES actor(id)
+);
+
+
+# FILM-DIRECTOR #
+CREATE TABLE film_director (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  filmId INT,
+  directorId INT,
+  FOREIGN KEY (filmId) REFERENCES film(id),
+  FOREIGN KEY (directorId) REFERENCES director(id)
+);
+
+
+# FILM-TYPE #
+CREATE TABLE film_type (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  type VARCHAR(20)
+);
+
+
+# GENRE #
+CREATE TABLE genre (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  type VARCHAR(50)
+);
+
+
+# FILM-GENRE #
+CREATE TABLE film_genre (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  filmId INT,
+  genreId INT,
+  FOREIGN KEY (filmId) REFERENCES film(id),
+  FOREIGN KEY (genreId) REFERENCES genre(id)
+);
+
+
+# ROOM #
+CREATE TABLE room (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+
+# CHAIR #
+CREATE TABLE chair (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  chairTypeId INT,
+  roomId INT,
+  FOREIGN KEY (chairTypeId) REFERENCES chair_type(id),
+  FOREIGN KEY (roomId) REFERENCES room(id)
+);
+
+
+# CHAIR-TYPE #
+CREATE TABLE chair_type (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  type VARCHAR(50)
+);
+
+
+# SCHEDULE #
+CREATE TABLE schedule (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  timeSchedule VARCHAR(20)
+);
+
+
+# TICKET-SCHEDULE #
+CREATE TABLE ticket_schedule (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  scheduleId INT,
+  filmTicketId INT,
+  FOREIGN KEY (scheduleId) REFERENCES schedule(id),
+  FOREIGN KEY (filmTicketId) REFERENCES film_ticket(id)
+);

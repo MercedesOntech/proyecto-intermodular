@@ -28,3 +28,8 @@ npm install print-js
 npm install bootstrap
 
 npm install
+
+npm install express mysql2 cors
+
+
+# MYSQL #
