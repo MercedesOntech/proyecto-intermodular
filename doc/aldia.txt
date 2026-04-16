@@ -499,4 +499,4 @@ en el apartado de comentarios, los suuarios interactuan, mostrando asi el nombre
 
 lo unico q me falta es completar el src
 
-dentro de src tengo completado: environments, ahora quiero q me digas q pondrias en core (LO QUIERO TODO COMPLETO) 
+dentro de src tengo completado: environments, ahora quiero q me digas q pondrias en core (LO QUIERO TODO COMPLETO INCLUYENDO COMANDOS) 
