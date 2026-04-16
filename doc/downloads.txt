@@ -33,3 +33,11 @@ npm install express mysql cors
 
 npm uninstall mysql
 npm install mysql2
+
+npm install bootstrap
+npm install bootstrap-icons
+npm install @angular/forms
+npm install jwt-decode
+
+npm install ngx-toastr
+npm install sweetalert2s

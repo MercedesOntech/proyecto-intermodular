@@ -4,7 +4,9 @@
   "cli": {
     "packageManager": "npm",
     "analytics": "62af8ea1-a3a1-4882-98a8-816b02baeec3",
-    "schematicCollections": ["angular-eslint"]
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -26,8 +28,14 @@
                 "input": "public"
               }
             ],
-            "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css", "src/styles.scss"],
-            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ],
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
@@ -85,7 +93,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }

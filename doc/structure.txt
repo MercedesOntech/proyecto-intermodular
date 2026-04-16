@@ -109,20 +109,48 @@ cd cine-app
 
 
 # CORE
-ng generate service core/services/auth
-ng generate service core/services/api
-ng generate interceptor core/interceptors/auth
-ng generate guard core/guards/auth
-ng generate interface core/models/user
+ng g module core
+
+--> Guards
+ng g guard core/guards/auth --functional=false
+ng g guard core/guards/role --functional=false
+ng g guard core/guards/admin --functional=false
+ng g guard core/guards/employee --functional=false
+ng g guard core/guards/no-auth --functional=false
+
+--> interceptors
+ng g interceptor core/interceptors/auth
+ng g interceptor core/interceptors/error
+ng g interceptor core/interceptors/loading
+
+--> Models
+ng g interface core/models/user
+ng g interface core/models/tarjet
+ng g interface core/models/film
+ng g interface core/models/film-ticket
+ng g interface core/models/bar-ticket
+ng g interface core/models/comment
+ng g interface core/models/api-response
+
+--> Services
+ng g service core/services/auth
+ng g service core/services/user
+ng g service core/services/tarjet
+ng g service core/services/film
+ng g service core/services/film-ticket
+ng g service core/services/bar
+ng g service core/services/comment
+ng g service core/services/loading
+ng g service core/services/email
+ng g service core/services/search
 
 
 
 
 # SHARED
-ng generate component shared/components/button
-ng generate component shared/components/modal
-ng generate directive shared/directives/highlight
-ng generate pipe shared/pipes/dateFormat
+--> Components 
+--> Directives 
+--> Pipes 
 
 
 

@@ -499,4 +499,6 @@ en el apartado de comentarios, los suuarios interactuan, mostrando asi el nombre
 
 lo unico q me falta es completar el src
 
-dentro de src tengo completado: environments, ahora quiero q me digas q pondrias en core (LO QUIERO TODO COMPLETO INCLUYENDO COMANDOS) 
+dentro de src tengo completado: environments, empieza por core (LO QUIERO TODO COMPLETO INCLUYENDO COMANDOS) 
+
+NECESITO EL PARA VISUALIZARLO SEA RESPONSIVE (UTILIZANDO BOOTSTRAP), PARA Q SE AJUSTE A LA PANTALLA DE UN MOVIL O DE UN ORDENADOR , PORTATIL, ETC

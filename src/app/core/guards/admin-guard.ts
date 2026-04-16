@@ -1,4 +1,4 @@
-// src/app/core/guards/role.guard.ts
+// src/app/core/guards/admin.guard.ts
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth';
@@ -6,26 +6,16 @@ import { AuthService } from '../services/auth';
 @Injectable({
   providedIn: 'root'
 })
-export class RoleGuard {
+export class AdminGuard {
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 
-  canActivate(requiredRole: string): boolean {
+  canActivate(): boolean {
     const userRole = this.authService.getUserRole();
     
-    if (userRole === requiredRole) {
-      return true;
-    }
-    
-    // Admin puede acceder a todo
     if (userRole === 'admin') {
-      return true;
-    }
-    
-    // Employee puede acceder a client y employee
-    if (userRole === 'employee' && (requiredRole === 'client' || requiredRole === 'employee')) {
       return true;
     }
     
