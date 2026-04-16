@@ -1,1 +1,15 @@
-<p>main-layout works!</p>
+<div class="app-container">
+  <app-header (menuToggle)="toggleSidebar()"></app-header>
+  
+  <div class="main-content-wrapper">
+    <app-sidebar [isCollapsed]="isSidebarCollapsed"></app-sidebar>
+    
+    <main class="main-content" [class.sidebar-collapsed]="isSidebarCollapsed">
+      <div class="container-fluid py-4">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+  
+  <app-footer></app-footer>
+</div>

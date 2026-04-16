@@ -1,0 +1,115 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+          <h4 class="mb-0">
+            <i class="bi bi-credit-card me-2"></i>
+            Finalizar Compra
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            {{ errorMessage }}
+            <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+          </div>
+          
+          <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            {{ successMessage }}
+            <button type="button" class="btn-close" (click)="successMessage = ''"></button>
+          </div>
+          
+          <!-- Resumen del pedido -->
+          <div class="order-summary mb-4">
+            <h5 class="mb-3">
+              <i class="bi bi-receipt me-2"></i>
+              Resumen del Pedido
+            </h5>
+            <div class="summary-item" *ngFor="let item of cartItems">
+              <span>{{ item.name }} x {{ item.quantity }}</span>
+              <span>{{ item.total | currencyFormat:'EUR' }}</span>
+            </div>
+            <hr>
+            <div class="summary-line">
+              <span>Subtotal</span>
+              <span>{{ subtotal | currencyFormat:'EUR' }}</span>
+            </div>
+            <div class="summary-line">
+              <span>IVA (21%)</span>
+              <span>{{ tax | currencyFormat:'EUR' }}</span>
+            </div>
+            <div class="summary-line total">
+              <span>Total</span>
+              <span>{{ total | currencyFormat:'EUR' }}</span>
+            </div>
+          </div>
+          
+          <!-- Formulario de tarjeta -->
+          <div *ngIf="!hasTarjet">
+            <h5 class="mb-3">
+              <i class="bi bi-credit-card me-2"></i>
+              Datos de la Tarjeta
+            </h5>
+            
+            <div class="mb-3">
+              <label class="form-label fw-bold">Número de Tarjeta</label>
+              <input type="text" 
+                     class="form-control" 
+                     [(ngModel)]="tarjetNumber"
+                     (input)="formatTarjetNumber()"
+                     placeholder="1234 5678 9012 3456"
+                     maxlength="19">
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Fecha Caducidad</label>
+                <input type="text" 
+                       class="form-control" 
+                       [(ngModel)]="tarjetExpiry"
+                       (input)="formatExpiry()"
+                       placeholder="MM/YY"
+                       maxlength="5">
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">CVV</label>
+                <input type="password" 
+                       class="form-control" 
+                       [(ngModel)]="tarjetCvv"
+                       placeholder="123"
+                       maxlength="4">
+              </div>
+            </div>
+            
+            <button class="btn btn-primary w-100" 
+                    (click)="registerAndPay()"
+                    [disabled]="isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+              <i *ngIf="!isLoading" class="bi bi-check-lg me-2"></i>
+              Pagar {{ total | currencyFormat:'EUR' }}
+            </button>
+          </div>
+          
+          <!-- Pago con tarjeta existente -->
+          <div *ngIf="hasTarjet">
+            <div class="alert alert-info">
+              <i class="bi bi-info-circle me-2"></i>
+              Usarás tu tarjeta registrada para pagar
+            </div>
+            
+            <button class="btn btn-success w-100" 
+                    (click)="payWithExistingCard()"
+                    [disabled]="isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+              <i *ngIf="!isLoading" class="bi bi-credit-card me-2"></i>
+              Pagar {{ total | currencyFormat:'EUR' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

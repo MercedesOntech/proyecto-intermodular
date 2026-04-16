@@ -1,0 +1,59 @@
+.new-comment-btn .btn {
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: 600;
+}
+
+.filters-container {
+  background: white;
+  border-radius: 12px;
+  padding: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 0.5rem 1.25rem;
+  border: none;
+  background: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.filter-btn:hover {
+  background: #f8f9fa;
+}
+
+.filter-btn.active {
+  background: #28a745;
+  color: white;
+}
+
+.comments-count {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.empty-state {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+}
+
+@media (max-width: 768px) {
+  .filter-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .empty-state {
+    padding: 2rem;
+  }
+}

@@ -1,4 +1,3 @@
-// src/app/core/models/tarjet.model.ts
 export interface Tarjet {
   id: number;
   number: string;

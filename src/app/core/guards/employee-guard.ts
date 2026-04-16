@@ -1,4 +1,3 @@
-// src/app/core/guards/employee.guard.ts
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth';

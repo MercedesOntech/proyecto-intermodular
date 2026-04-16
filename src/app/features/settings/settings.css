@@ -1,0 +1,88 @@
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+}
+
+.info-row {
+  display: flex;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  width: 120px;
+  font-weight: 500;
+  color: #6c757d;
+}
+
+.info-value {
+  flex: 1;
+  color: #212529;
+}
+
+.tarjet-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.tarjet-icon {
+  font-size: 2rem;
+  color: #28a745;
+}
+
+.form-control {
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  border-color: #0d6efd;
+}
+
+.btn {
+  border-radius: 8px;
+  padding: 8px 20px;
+}
+
+.progress {
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .info-row {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .info-label {
+    width: auto;
+  }
+  
+  .tarjet-info {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .d-flex.gap-2 {
+    flex-direction: column;
+  }
+}

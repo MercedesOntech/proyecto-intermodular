@@ -1,4 +1,3 @@
-// src/app/core/services/index.ts
 export { AuthService } from './auth';
 export { UserService } from './user';
 export { TarjetService } from './tarjet';

@@ -1,1 +1,215 @@
-<p>register works!</p>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-success text-white text-center rounded-top-4">
+          <h4 class="mb-0">
+            <i class="bi bi-person-plus-fill me-2"></i>
+            Crear Cuenta
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            {{ errorMessage }}
+            <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+          </div>
+          
+          <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            {{ successMessage }}
+            <button type="button" class="btn-close" (click)="successMessage = ''"></button>
+          </div>
+          
+          <form (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-person me-2"></i>
+                  Nombre *
+                </label>
+                <input type="text" 
+                       class="form-control" 
+                       [(ngModel)]="userData.name" 
+                       name="name" 
+                       placeholder="Nombre"
+                       required>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-person-badge me-2"></i>
+                  Apellidos *
+                </label>
+                <input type="text" 
+                       class="form-control" 
+                       [(ngModel)]="userData.lastName" 
+                       name="lastName" 
+                       placeholder="Apellidos"
+                       required>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-calendar me-2"></i>
+                  Fecha de Nacimiento *
+                </label>
+                <input type="date" 
+                       class="form-control" 
+                       [(ngModel)]="userData.birthDate" 
+                       name="birthDate" 
+                       required>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-person-circle me-2"></i>
+                  Nombre de Usuario *
+                </label>
+                <input type="text" 
+                       class="form-control" 
+                       [(ngModel)]="userData.userName" 
+                       name="userName" 
+                       placeholder="usuario123"
+                       required>
+                <small class="text-muted">Mínimo 3 caracteres</small>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label fw-bold">
+                <i class="bi bi-envelope me-2"></i>
+                Correo Electrónico *
+              </label>
+              <input type="email" 
+                     class="form-control" 
+                     [(ngModel)]="userData.email" 
+                     name="email" 
+                     placeholder="ejemplo@correo.com"
+                     required>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-globe me-2"></i>
+                  Prefijo
+                </label>
+                <select class="form-select" [(ngModel)]="userData.phonePrefix" name="phonePrefix">
+                  <option *ngFor="let prefix of phonePrefixes" [value]="prefix">{{ prefix }}</option>
+                </select>
+              </div>
+              
+              <div class="col-md-8 mb-3">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-phone me-2"></i>
+                  Teléfono *
+                </label>
+                <input type="tel" 
+                       class="form-control" 
+                       [(ngModel)]="userData.phone" 
+                       name="phone" 
+                       placeholder="612345678"
+                       required>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-lock me-2"></i>
+                  Contraseña *
+                </label>
+                <input type="password" 
+                       class="form-control" 
+                       [(ngModel)]="userData.password" 
+                       name="password"
+                       (input)="checkPasswordStrength()"
+                       placeholder="********"
+                       required>
+                
+                <!-- Indicador de fortaleza -->
+                <div class="mt-2" *ngIf="userData.password">
+                  <div class="progress" style="height: 5px;">
+                    <div class="progress-bar" 
+                         [class.bg-danger]="getPasswordStrengthValue() <= 2"
+                         [class.bg-warning]="getPasswordStrengthValue() === 3 || getPasswordStrengthValue() === 4"
+                         [class.bg-success]="getPasswordStrengthValue() === 5"
+                         role="progressbar" 
+                         [style.width]="(getPasswordStrengthValue() / 5 * 100) + '%'">
+                    </div>
+                  </div>
+                  <small class="text-muted">
+                    Fortaleza: {{ getPasswordStrengthText() }}
+                  </small>
+                  <div class="small mt-1">
+                    <span [class.text-success]="passwordStrength.minLength">✓ 8 caracteres mínimo</span><br>
+                    <span [class.text-success]="passwordStrength.hasUpper">✓ Una mayúscula</span><br>
+                    <span [class.text-success]="passwordStrength.hasLower">✓ Una minúscula</span><br>
+                    <span [class.text-success]="passwordStrength.hasNumber">✓ Un número</span><br>
+                    <span [class.text-success]="passwordStrength.hasSpecial">✓ Un carácter especial (@$!%*?&)</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">
+                  <i class="bi bi-lock-fill me-2"></i>
+                  Confirmar Contraseña *
+                </label>
+                <input type="password" 
+                       class="form-control" 
+                       [(ngModel)]="userData.confirmPassword" 
+                       name="confirmPassword"
+                       placeholder="********"
+                       required>
+                <small *ngIf="userData.confirmPassword && userData.password !== userData.confirmPassword" 
+                       class="text-danger">
+                  Las contraseñas no coinciden
+                </small>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <div class="form-check">
+                <input type="checkbox" 
+                       class="form-check-input" 
+                       [(ngModel)]="userData.acceptTerms" 
+                       name="acceptTerms"
+                       id="acceptTerms">
+                <label class="form-check-label" for="acceptTerms">
+                  Acepto la 
+                  <a href="javascript:void(0)" (click)="downloadPrivacyPolicy()" class="text-primary">
+                    Política de Privacidad
+                  </a>
+                  *
+                </label>
+              </div>
+            </div>
+            
+            <button type="submit" 
+                    class="btn btn-success btn-lg w-100"
+                    [disabled]="isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+              <i *ngIf="!isLoading" class="bi bi-check-lg me-2"></i>
+              Registrarse
+            </button>
+          </form>
+          
+          <hr class="my-4">
+          
+          <div class="text-center">
+            <p class="mb-0">
+              ¿Ya tienes cuenta?
+              <a routerLink="/auth/login" class="text-success fw-bold text-decoration-none">
+                Inicia sesión aquí
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

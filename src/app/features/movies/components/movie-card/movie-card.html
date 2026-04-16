@@ -1,1 +1,28 @@
-<p>movie-card works!</p>
+<div class="movie-card">
+  <div class="movie-poster">
+    <img [src]="movie.imageUrl || 'assets/images/default-film.jpg'" 
+         [alt]="movie.name"
+         (error)="$event.target.src='assets/images/default-film.jpg'">
+    <div class="movie-overlay">
+      <a [routerLink]="['/movies', movie.id]" class="btn btn-light">
+        <i class="bi bi-play-fill me-1"></i> Ver detalles
+      </a>
+    </div>
+    <div class="movie-badge" *ngIf="movie.film_type_id === 2">
+      <span class="badge-3d">3D</span>
+    </div>
+  </div>
+  <div class="movie-info">
+    <h5 class="movie-title">{{ movie.name | truncate:30 }}</h5>
+    <div class="movie-meta">
+      <span class="movie-duration">
+        <i class="bi bi-clock"></i> {{ movie.duration | duration }}
+      </span>
+      <span class="movie-type" [class.text-primary]="movie.film_type_id === 1"
+            [class.text-success]="movie.film_type_id === 2">
+        {{ movie.filmType?.type || '2D' }}
+      </span>
+    </div>
+    <p class="movie-description">{{ movie.description | truncate:80 }}</p>
+  </div>
+</div>

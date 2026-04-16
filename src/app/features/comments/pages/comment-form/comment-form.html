@@ -1,0 +1,63 @@
+<div class="comment-form-card">
+  <div class="card-header">
+    <h5 class="mb-0">
+      <i class="bi bi-pencil-square me-2"></i>
+      Nuevo Comentario
+    </h5>
+  </div>
+  
+  <div class="card-body">
+    <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      {{ errorMessage }}
+      <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+    </div>
+    
+    <!-- Tipo de comentario -->
+    <div class="comment-type mb-3">
+      <label class="form-label fw-bold">¿Sobre qué quieres comentar?</label>
+      <div class="type-buttons">
+        <button type="button" 
+                class="type-btn" 
+                [class.active]="commentType === 'movies'"
+                (click)="selectCommentType('movies')">
+          <i class="bi bi-film me-1"></i>
+          Películas
+        </button>
+        <button type="button" 
+                class="type-btn" 
+                [class.active]="commentType === 'bar'"
+                (click)="selectCommentType('bar')">
+          <i class="bi bi-cup-straw me-1"></i>
+          Bar
+        </button>
+      </div>
+    </div>
+    
+    <!-- Textarea del comentario -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Tu comentario</label>
+      <textarea class="comment-textarea" 
+                rows="4"
+                [(ngModel)]="commentData.content"
+                (input)="updateCharCount()"
+                placeholder="Escribe aquí tu opinión..."></textarea>
+      <div class="char-counter" [class.text-danger]="charCount > maxChars">
+        {{ charCount }}/{{ maxChars }} caracteres
+      </div>
+    </div>
+    
+    <!-- Botones -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="resetForm()">
+        <i class="bi bi-x-lg me-1"></i>
+        Cancelar
+      </button>
+      <button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="isLoading">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
+        <i *ngIf="!isLoading" class="bi bi-send me-1"></i>
+        Publicar
+      </button>
+    </div>
+  </div>
+</div>

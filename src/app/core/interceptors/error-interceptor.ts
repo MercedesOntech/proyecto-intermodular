@@ -1,4 +1,3 @@
-// src/app/core/interceptors/error.interceptor.ts
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -19,10 +18,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         let errorMessage = 'Ocurrió un error';
         
         if (error.error instanceof ErrorEvent) {
-          // Error del lado del cliente
           errorMessage = error.error.message;
         } else {
-          // Error del lado del servidor
           switch (error.status) {
             case 401:
               errorMessage = 'No autorizado. Por favor, inicia sesión nuevamente.';

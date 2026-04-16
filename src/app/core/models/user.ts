@@ -17,7 +17,7 @@ export interface User {
 
 export interface UserType {
   id: number;
-  name: string; // 'client', 'employee', 'admin'
+  name: string;
 }
 
 export interface RegisterUser {
@@ -31,7 +31,7 @@ export interface RegisterUser {
   password: string;
   confirmPassword: string;
   acceptTerms: boolean;
-  userType?: string; // para admin cuando crea usuarios
+  userType?: string;
 }
 
 export interface LoginCredentials {

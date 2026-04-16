@@ -1,0 +1,61 @@
+.search-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.days-container {
+  overflow-x: auto;
+}
+
+.days-scroll {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  min-width: min-content;
+}
+
+.day-btn {
+  padding: 0.6rem 1.25rem;
+  border: 1px solid #dee2e6;
+  background: white;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.day-btn:hover {
+  background: #f8f9fa;
+  border-color: #007bff;
+}
+
+.day-btn.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.empty-state {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+}
+
+@media (max-width: 768px) {
+  .movies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  
+  .day-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+  }
+}

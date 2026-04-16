@@ -1,0 +1,197 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title animate-title">
+        <span class="text-warning">ROMERO</span> CINE
+      </h1>
+      <p class="hero-subtitle animate-fade">
+        La mejor experiencia cinematográfica
+      </p>
+      <div class="hero-buttons animate-fade-delay">
+        <a routerLink="/movies" class="btn btn-primary btn-lg me-3">
+          <i class="bi bi-film me-2"></i>
+          Ver Películas
+        </a>
+        <a routerLink="/bar" class="btn btn-outline-light btn-lg">
+          <i class="bi bi-cup-straw me-2"></i>
+          Ir al Bar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección de Películas Destacadas -->
+  <div class="section-container">
+    <div class="section-header">
+      <h2 class="section-title">
+        <i class="bi bi-star-fill text-warning me-2"></i>
+        Películas Destacadas
+      </h2>
+      <a routerLink="/movies" class="view-all">
+        Ver todas <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+    <div *ngIf="isLoading" class="text-center py-5">
+      <app-spinner></app-spinner>
+    </div>
+
+    <div *ngIf="!isLoading && featuredFilms.length > 0" class="carousel-container"
+         (mouseenter)="stopAutoPlay()"
+         (mouseleave)="startAutoPlay()">
+      
+      <button class="carousel-btn prev" (click)="prevFilmSlide()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      
+      <div class="carousel-wrapper">
+        <div class="carousel-track" [style.transform]="'translateX(-' + currentFilmSlide * 100 + '%)'">
+          <div class="carousel-slide" *ngFor="let film of featuredFilms">
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img [src]="film.imageUrl || 'assets/images/default-film.jpg'" 
+                     [alt]="film.name"
+                     (error)="handleImageError($event)">
+                <div class="movie-overlay">
+                  <a [routerLink]="['/movies', film.id]" class="btn btn-light">
+                    <i class="bi bi-play-fill me-1"></i> Ver más
+                  </a>
+                </div>
+                <div class="movie-badge" *ngIf="film.film_type_id === 2">
+                  <span class="badge-3d">3D</span>
+                </div>
+              </div>
+              <div class="movie-info">
+                <h5 class="movie-title">{{ film.name | truncate:25 }}</h5>
+                <div class="movie-meta">
+                  <span class="movie-duration">
+                    <i class="bi bi-clock"></i> {{ film.duration | duration }}
+                  </span>
+                  <span class="movie-type" [class.text-primary]="film.film_type_id === 1"
+                        [class.text-success]="film.film_type_id === 2">
+                    {{ film.filmType?.type || '2D' }}
+                  </span>
+                </div>
+                <p class="movie-description">{{ film.description | truncate:80 }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <button class="carousel-btn next" (click)="nextFilmSlide()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Indicadores del carrusel -->
+    <div class="carousel-indicators" *ngIf="!isLoading && featuredFilms.length > 0">
+      <button *ngFor="let film of featuredFilms; let i = index"
+              class="indicator"
+              [class.active]="i === currentFilmSlide"
+              (click)="goToFilmSlide(i)">
+      </button>
+    </div>
+  </div>
+
+  <!-- Sección de Productos del Bar -->
+  <div class="section-container bg-light">
+    <div class="section-header">
+      <h2 class="section-title">
+        <i class="bi bi-cup-straw-fill text-warning me-2"></i>
+        Snacks y Bebidas
+      </h2>
+      <a routerLink="/bar" class="view-all">
+        Ver todos <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+    <div *ngIf="!isLoading && featuredProducts.length > 0" class="products-grid">
+      <div *ngFor="let product of featuredProducts" class="product-card">
+        <div class="product-image">
+          <img [src]="product.imageUrl || 'assets/images/default-product.jpg'" 
+               [alt]="product.name"
+               (error)="handleImageError($event)">
+        </div>
+        <div class="product-info">
+          <h5 class="product-name">{{ product.name | truncate:20 }}</h5>
+          <p class="product-price">{{ product.price | currencyFormat:'EUR' }}</p>
+          <a routerLink="/bar" class="btn btn-sm btn-outline-primary w-100">
+            <i class="bi bi-cart-plus me-1"></i> Comprar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección de Promociones -->
+  <div class="promo-section">
+    <div class="row g-0">
+      <div class="col-md-6">
+        <div class="promo-card promo-movies">
+          <div class="promo-icon">
+            <i class="bi bi-ticket-perforated"></i>
+          </div>
+          <h3>Entradas desde 5.90€</h3>
+          <p>Disfruta de las mejores películas al mejor precio</p>
+          <a routerLink="/movies" class="btn btn-light">Comprar entradas</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="promo-card promo-bar">
+          <div class="promo-icon">
+            <i class="bi bi-gift"></i>
+          </div>
+          <h3>Combo Familiar</h3>
+          <p>2 palomitas grandes + 2 bebidas por sólo 12€</p>
+          <a routerLink="/bar" class="btn btn-light">Ver combos</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección de Características -->
+  <div class="features-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="bi bi-film"></i>
+            </div>
+            <h4>Estrenos</h4>
+            <p>Las últimas novedades del cine</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="bi bi-cup-straw"></i>
+            </div>
+            <h4>Bar Completo</h4>
+            <p>Snacks, bebidas y combos</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="bi bi-credit-card"></i>
+            </div>
+            <h4>Pago Seguro</h4>
+            <p>Múltiples métodos de pago</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="bi bi-headphones"></i>
+            </div>
+            <h4>Soporte 24/7</h4>
+            <p>Atención al cliente</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

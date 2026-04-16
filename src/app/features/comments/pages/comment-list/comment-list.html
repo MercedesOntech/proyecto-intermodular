@@ -1,0 +1,75 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <!-- Header -->
+      <div class="text-center mb-4">
+        <h1>
+          <i class="bi bi-chat-dots-fill text-primary me-2"></i>
+          Comentarios
+        </h1>
+        <p class="text-muted">Comparte tu opinión sobre películas y productos del bar</p>
+      </div>
+      
+      <!-- Botón para nuevo comentario -->
+      <div class="new-comment-btn mb-4" *ngIf="isLoggedIn()">
+        <button class="btn btn-primary btn-lg w-100" (click)="showForm = !showForm">
+          <i class="bi bi-plus-circle me-2"></i>
+          {{ showForm ? 'Cancelar' : 'Escribir un comentario' }}
+        </button>
+      </div>
+      
+      <div *ngIf="!isLoggedIn()" class="alert alert-info text-center">
+        <i class="bi bi-info-circle me-2"></i>
+        <a routerLink="/auth/login" class="alert-link">Inicia sesión</a> para escribir un comentario
+      </div>
+      
+      <!-- Formulario de comentario -->
+      <div *ngIf="showForm && isLoggedIn()" class="mb-4">
+        <app-comment-form (commentCreated)="onCommentCreated($event)"></app-comment-form>
+      </div>
+      
+      <!-- Filtros -->
+      <div class="filters-container mb-4">
+        <div class="filters">
+          <button class="filter-btn" [class.active]="filterType === 'all'" (click)="selectFilter('all')">
+            <i class="bi bi-chat-dots me-1"></i>
+            Todos
+          </button>
+          <button class="filter-btn" [class.active]="filterType === 'movies'" (click)="selectFilter('movies')">
+            <i class="bi bi-film me-1"></i>
+            Películas
+          </button>
+          <button class="filter-btn" [class.active]="filterType === 'bar'" (click)="selectFilter('bar')">
+            <i class="bi bi-cup-straw me-1"></i>
+            Bar
+          </button>
+        </div>
+      </div>
+      
+      <!-- Contador de comentarios -->
+      <div class="comments-count mb-3">
+        <i class="bi bi-chat me-1"></i>
+        {{ filteredComments.length }} comentarios
+      </div>
+      
+      <!-- Lista de comentarios -->
+      <div *ngIf="isLoading" class="text-center py-5">
+        <app-spinner></app-spinner>
+      </div>
+      
+      <div *ngIf="!isLoading && filteredComments.length === 0" class="empty-state text-center py-5">
+        <i class="bi bi-chat-dots display-1 text-muted"></i>
+        <h4 class="mt-3">No hay comentarios aún</h4>
+        <p class="text-muted">Sé el primero en dejar un comentario</p>
+      </div>
+      
+      <div *ngIf="!isLoading && filteredComments.length > 0">
+        <app-comment-item *ngFor="let comment of filteredComments"
+                         [comment]="comment"
+                         (deleteComment)="onCommentDeleted($event)"
+                         (editComment)="onCommentEdited($event)">
+        </app-comment-item>
+      </div>
+    </div>
+  </div>
+</div>

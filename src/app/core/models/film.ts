@@ -18,7 +18,7 @@ export interface Film {
 
 export interface FilmType {
   id: number;
-  type: string; // '2D', '3D'
+  type: string;
 }
 
 export interface Room {

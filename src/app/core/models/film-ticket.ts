@@ -24,7 +24,7 @@ export interface Chair {
 
 export interface ChairType {
   id: number;
-  type: string; // 'vip', 'disabled', 'normal'
+  type: string;
 }
 
 export interface SeatReservation {

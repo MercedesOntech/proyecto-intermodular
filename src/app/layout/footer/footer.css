@@ -1,0 +1,46 @@
+.footer {
+  margin-top: auto;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  color: white;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background-color: #3498db;
+  transform: translateY(-3px);
+}
+
+.legal-links a {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.legal-links a:hover {
+  color: #3498db !important;
+  text-decoration: underline !important;
+}
+
+hr {
+  background-color: rgba(255,255,255,0.1);
+}
+
+@media (max-width: 768px) {
+  .social-links {
+    margin-bottom: 1rem;
+  }
+  
+  .col-md-4 {
+    text-align: center !important;
+  }
+}

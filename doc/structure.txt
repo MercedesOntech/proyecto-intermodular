@@ -148,46 +148,122 @@ ng g service core/services/search
 
 
 # SHARED
---> Components 
---> Directives 
---> Pipes 
+--> Components
+ng g component shared/components/button --flat --skip-tests
+ng g component shared/components/modal --flat --skip-tests
+ng g component shared/components/spinner --flat --skip-tests
+ng g component shared/components/alert --flat --skip-tests
+ng g component shared/components/input --flat --skip-tests
+ng g component shared/components/card --flat --skip-tests
+
+--> Directives
+ng g directive shared/directives/highlight
+ng g directive shared/directives/loading
+ng g directive shared/directives/debounce-click
+ng g directive shared/directives/number-only
+ng g directive shared/directives/email-validator
+ng g directive shared/directives/password-match
+ng g directive shared/directives/scroll-to
+ng g directive shared/directives/tooltip
+ng g directive shared/directives/infinite-scroll
+ng g directive shared/directives/autofocus
+
+--> Pipes
+ng g pipe shared/pipes/safe-html
+ng g pipe shared/pipes/truncate
+ng g pipe shared/pipes/filter
+ng g pipe shared/pipes/sort
+ng g pipe shared/pipes/currency-format
+ng g pipe shared/pipes/date-format
+ng g pipe shared/pipes/age
+ng g pipe shared/pipes/duration
+ng g pipe shared/pipes/image-url
+ng g pipe shared/pipes/phone-format
+ng g pipe shared/pipes/capitalize
+ng g pipe shared/pipes/stars-rating
+ng g pipe shared/pipes/unique
+ng g pipe shared/pipes/default-image
 
 
 
 
 # LAYOUT
-ng generate component layout/header
-ng generate component layout/sidebar
-ng generate component layout/footer
-ng generate component layout/main-layout
+ng g component layout/main-layout --skip-tests
+ng g component layout/header --skip-tests
+ng g component layout/sidebar --skip-tests
+ng g component layout/footer --skip-tests
 
 
 
 
 # FEATURES
 --> Auth
-ng generate component features/auth/pages/login
-ng generate component features/auth/pages/register
-ng generate service features/auth/services/auth
+mkdir -p src/app/features/auth/pages/login
+mkdir -p src/app/features/auth/pages/register
+mkdir -p src/app/features/auth/services
 
---> Users
-ng generate component features/users/pages/user-list
-ng generate component features/users/pages/user-detail
-ng generate component features/users/components/user-card
-ng generate service features/users/services/users
-ng generate interface features/users/models/user
+ng g component features/auth/pages/login --standalone --skip-tests
+ng g component features/auth/pages/register --standalone --skip-tests
+
+ng g service features/auth/services/auth-feature --skip-tests
+
+--> Home
+mkdir -p src/app/features/home
+
+ng g component features/home/home --standalone --skip-tests
 
 --> Movies
-ng generate component features/movies/pages/movie-list
-ng generate component features/movies/pages/movie-detail
-ng generate component features/movies/components/movie-card
-ng generate service features/movies/services/movies
-ng generate interface features/movies/models/movie
+mkdir -p src/app/features/movies/components/movie-card
+mkdir -p src/app/features/movies/pages/movie-list
+mkdir -p src/app/features/movies/pages/movie-detail
+mkdir -p src/app/features/movies/services
+mkdir -p src/app/features/movies/models
 
---> Routing
-touch src/app/features/auth/auth.routes.ts
-touch src/app/features/users/users.routes.ts
-touch src/app/features/movies/movies.routes.ts
+ng g component features/movies/components/movie-card --standalone --skip-tests
+ng g component features/movies/pages/movie-list --standalone --skip-tests
+ng g component features/movies/pages/movie-detail --standalone --skip-tests
+ng g service features/movies/services/movies-feature --skip-tests
+
+--> Bar
+mkdir -p src/app/features/bar/components/product-card
+mkdir -p src/app/features/bar/pages/bar-list
+mkdir -p src/app/features/bar/pages/checkout
+mkdir -p src/app/features/bar/services
+mkdir -p src/app/features/bar/models
+
+ng g component features/bar/components/product-card --standalone --skip-tests
+ng g component features/bar/pages/bar-list --standalone --skip-tests
+ng g component features/bar/pages/checkout --standalone --skip-tests
+ng g service features/bar/services/bar-feature --skip-tests
+
+--> Comments
+mkdir -p src/app/features/comments/components/comment-item
+mkdir -p src/app/features/comments/pages/comment-list
+mkdir -p src/app/features/comments/pages/comment-form
+mkdir -p src/app/features/comments/services
+
+ng g component features/comments/components/comment-item --standalone --skip-tests
+ng g component features/comments/pages/comment-list --standalone --skip-tests
+ng g component features/comments/pages/comment-form --standalone --skip-tests
+ng g service features/comments/services/comments-feature --skip-tests
+
+--> Admin
+mkdir -p src/app/features/admin/pages/admin-movies
+mkdir -p src/app/features/admin/pages/admin-products
+mkdir -p src/app/features/admin/pages/admin-users
+mkdir -p src/app/features/admin/pages/admin-create-user
+mkdir -p src/app/features/admin/services
+
+ng g component features/admin/pages/admin-movies --standalone --skip-tests
+ng g component features/admin/pages/admin-products --standalone --skip-tests
+ng g component features/admin/pages/admin-users --standalone --skip-tests
+ng g component features/admin/pages/admin-create-user --standalone --skip-tests
+ng g service features/admin/services/admin-feature --skip-tests
+
+--> Settings
+mkdir -p src/app/features/settings
+
+ng g component features/settings/settings --standalone --skip-tests
 
 
 

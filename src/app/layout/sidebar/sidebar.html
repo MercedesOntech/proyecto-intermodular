@@ -1,1 +1,21 @@
-<p>sidebar works!</p>
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <div class="sidebar-header">
+    <div class="logo-container" *ngIf="!isCollapsed">
+      <i class="bi bi-film"></i>
+      <span class="ms-2">Menú</span>
+    </div>
+    <div class="logo-icon" *ngIf="isCollapsed">
+      <i class="bi bi-film"></i>
+    </div>
+  </div>
+
+  <ul class="sidebar-nav">
+    <li *ngFor="let item of visibleMenuItems" class="nav-item">
+      <a class="nav-link" [routerLink]="item.path" routerLinkActive="active">
+        <i [class]="'bi ' + item.icon"></i>
+        <span class="nav-label" *ngIf="!isCollapsed">{{ item.label }}</span>
+        <span class="tooltip-text" *ngIf="isCollapsed">{{ item.label }}</span>
+      </a>
+    </li>
+  </ul>
+</div>

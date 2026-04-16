@@ -1,0 +1,92 @@
+.trailer-container {
+  position: relative;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.trailer-container iframe {
+  display: block;
+  border-radius: 12px;
+}
+
+.no-trailer {
+  background: #f8f9fa;
+  height: 315px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.genre-tag,
+.director-tag,
+.actor-tag {
+  display: inline-block;
+  background: #f0f0f0;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin: 0 4px 4px 0;
+  font-size: 0.85rem;
+}
+
+.schedules-section {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 16px;
+  margin-top: 2rem;
+}
+
+.schedules-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.schedule-btn {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #007bff;
+  background: white;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.schedule-btn:hover {
+  background: #007bff;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.schedule-btn.selected {
+  background: #007bff;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+}
+
+.btn-primary {
+  padding: 12px 32px;
+  border-radius: 30px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .schedules-section {
+    padding: 1rem;
+  }
+  
+  .schedule-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  .genre-tag,
+  .director-tag,
+  .actor-tag {
+    font-size: 0.75rem;
+  }
+}

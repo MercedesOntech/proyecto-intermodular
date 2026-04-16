@@ -1,0 +1,43 @@
+<div class="comment-item" [class.editing]="isEditing">
+  <div class="comment-avatar">
+    <div class="avatar-circle">
+      {{ getUserInitials() }}
+    </div>
+  </div>
+  
+  <div class="comment-content">
+    <div class="comment-header">
+      <div class="comment-user">
+        <strong>{{ comment.user?.name || 'Usuario' }}</strong>
+        <span class="comment-time">{{ getTimeAgo() }}</span>
+      </div>
+      
+      <div class="comment-actions" *ngIf="canEditDelete">
+        <button class="action-btn" (click)="toggleActions()">
+          <i class="bi bi-three-dots-vertical"></i>
+        </button>
+        
+        <div class="actions-dropdown" *ngIf="showActions" (click)="$event.stopPropagation()">
+          <button class="dropdown-item" (click)="startEdit()">
+            <i class="bi bi-pencil me-2"></i> Editar
+          </button>
+          <button class="dropdown-item text-danger" (click)="onDelete()">
+            <i class="bi bi-trash me-2"></i> Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="comment-body" *ngIf="!isEditing">
+      <p>{{ comment.content }}</p>
+    </div>
+    
+    <div class="comment-edit" *ngIf="isEditing">
+      <textarea class="edit-textarea" [(ngModel)]="editContent" rows="3"></textarea>
+      <div class="edit-actions">
+        <button class="btn btn-sm btn-secondary" (click)="cancelEdit()">Cancelar</button>
+        <button class="btn btn-sm btn-primary" (click)="saveEdit()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

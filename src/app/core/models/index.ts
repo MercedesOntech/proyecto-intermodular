@@ -1,4 +1,3 @@
-// src/app/core/models/index.ts
 export * from './user';
 export * from './tarjet';
 export * from './film';

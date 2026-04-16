@@ -1,0 +1,116 @@
+<div class="container-fluid px-4 py-4">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">
+          <i class="bi bi-cup-straw me-2 text-warning"></i>
+          Bar - Snacks y Bebidas
+        </h1>
+      </div>
+      
+      <!-- Buscador -->
+      <div class="search-container mb-4">
+        <div class="input-group">
+          <span class="input-group-text bg-white">
+            <i class="bi bi-search"></i>
+          </span>
+          <input type="text" 
+                 class="form-control" 
+                 placeholder="Buscar productos..." 
+                 [(ngModel)]="searchTerm">
+        </div>
+      </div>
+      
+      <!-- Categorías -->
+      <div class="categories-container mb-4">
+        <div class="categories-scroll">
+          <button *ngFor="let category of categories" 
+                  class="category-btn" 
+                  [class.active]="selectedCategory === category"
+                  (click)="selectCategory(category)">
+            {{ category | capitalize }}
+          </button>
+        </div>
+      </div>
+      
+      <!-- Grid de productos -->
+      <div *ngIf="isLoading" class="text-center py-5">
+        <app-spinner></app-spinner>
+      </div>
+      
+      <div *ngIf="!isLoading && filteredProducts.length === 0" class="text-center py-5">
+        <i class="bi bi-emoji-frown display-1 text-muted"></i>
+        <p class="mt-3">No se encontraron productos</p>
+      </div>
+      
+      <div *ngIf="!isLoading && filteredProducts.length > 0" class="products-grid">
+        <app-product-card *ngFor="let product of filteredProducts" 
+                         [product]="product"
+                         (quantityChange)="updateQuantity($event)">
+        </app-product-card>
+      </div>
+    </div>
+    
+    <!-- Carrito lateral -->
+    <div class="col-lg-3">
+      <div class="cart-sidebar">
+        <div class="cart-header">
+          <h5 class="mb-0">
+            <i class="bi bi-cart-fill me-2"></i>
+            Mi Carrito
+          </h5>
+          <span class="badge bg-primary">{{ cart.length }} items</span>
+        </div>
+        
+        <div class="cart-body">
+          <div *ngIf="cart.length === 0" class="empty-cart">
+            <i class="bi bi-cart-x display-4 text-muted"></i>
+            <p class="mt-2">Tu carrito está vacío</p>
+            <small class="text-muted">Agrega productos para continuar</small>
+          </div>
+          
+          <div *ngIf="cart.length > 0">
+            <div *ngFor="let item of cart" class="cart-item">
+              <img [src]="item.imageUrl || 'assets/images/default-product.jpg'" 
+                   class="cart-item-img" 
+                   [alt]="item.name">
+              <div class="cart-item-info">
+                <h6 class="cart-item-name">{{ item.name }}</h6>
+                <div class="cart-item-details">
+                  <span>{{ item.quantity }} x {{ item.price | currencyFormat:'EUR' }}</span>
+                  <strong class="text-success">{{ item.total | currencyFormat:'EUR' }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="cart-footer" *ngIf="cart.length > 0">
+          <div class="cart-total-line">
+            <span>Subtotal</span>
+            <span>{{ getSubtotal() | currencyFormat:'EUR' }}</span>
+          </div>
+          <div class="cart-total-line">
+            <span>IVA (21%)</span>
+            <span>{{ getTax() | currencyFormat:'EUR' }}</span>
+          </div>
+          <div class="cart-total-line total">
+            <span>Total</span>
+            <span>{{ getTotal() | currencyFormat:'EUR' }}</span>
+          </div>
+          
+          <div class="cart-buttons">
+            <button class="btn btn-outline-danger btn-sm w-100 mb-2" (click)="clearCart()">
+              <i class="bi bi-trash me-2"></i>
+              Vaciar Carrito
+            </button>
+            <button class="btn btn-success w-100" (click)="checkout()">
+              <i class="bi bi-credit-card me-2"></i>
+              Comprar Ahora
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

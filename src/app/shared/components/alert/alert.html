@@ -1,0 +1,9 @@
+<div *ngIf="show" class="alert" [class.alert-success]="type === 'success'" 
+     [class.alert-danger]="type === 'danger'"
+     [class.alert-warning]="type === 'warning'"
+     [class.alert-info]="type === 'info'"
+     role="alert">
+  <i [class]="getIconClass() + ' me-2'"></i>
+  {{ message }}
+  <button *ngIf="dismissible" type="button" class="btn-close" (click)="close()" aria-label="Close"></button>
+</div>

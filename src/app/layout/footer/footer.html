@@ -1,1 +1,59 @@
-<p>footer works!</p>
+<footer class="footer bg-dark text-white mt-auto">
+  <div class="container py-4">
+    <div class="row">
+      <!-- Columna izquierda - Contacto -->
+      <div class="col-md-4 mb-3 mb-md-0">
+        <h5 class="mb-3">Contacto</h5>
+        <p class="mb-2">
+          <i class="bi bi-telephone me-2"></i>
+          +34 658 674 631
+        </p>
+        <p class="mb-2">
+          <i class="bi bi-envelope me-2"></i>
+          mercedesromeroweb@gmail.com
+        </p>
+      </div>
+
+      <!-- Columna central - Redes Sociales -->
+      <div class="col-md-4 mb-3 mb-md-0 text-center">
+        <h5 class="mb-3">Síguenos</h5>
+        <div class="social-links">
+          <a *ngFor="let social of socialLinks" 
+             [href]="social.url" 
+             target="_blank"
+             class="social-link mx-2"
+             [title]="social.name">
+            <i [class]="'bi ' + social.icon"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna derecha - Documentos legales -->
+      <div class="col-md-4 text-md-end">
+        <h5 class="mb-3">Legal</h5>
+        <div class="legal-links">
+          <a class="d-block mb-2 text-white text-decoration-none" 
+             (click)="downloadFile('terminos.pdf')">
+            <i class="bi bi-file-text me-2"></i>
+            Términos y condiciones
+          </a>
+          <a class="d-block text-white text-decoration-none" 
+             (click)="downloadFile('privacidad.pdf')">
+            <i class="bi bi-shield-lock me-2"></i>
+            Política de privacidad
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-3">
+
+    <div class="row">
+      <div class="col-12 text-center">
+        <p class="mb-0 small">
+          &copy; {{ currentYear }} ROMERO Cine. Todos los derechos reservados.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

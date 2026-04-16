@@ -1,4 +1,3 @@
-// src/app/core/models/bar-ticket.model.ts
 import { User } from './user';
 
 export interface BarTicket {

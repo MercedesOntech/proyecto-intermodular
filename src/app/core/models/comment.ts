@@ -1,4 +1,3 @@
-// src/app/core/models/comment.model.ts
 import { User } from './user';
 
 export interface Comment {

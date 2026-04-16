@@ -1,1 +1,53 @@
-<p>movie-list works!</p>
+<div class="container mt-4">
+  <div class="text-center mb-4">
+    <h1>
+      <i class="bi bi-film text-primary me-2"></i>
+      Cartelera
+    </h1>
+    <p class="text-muted">Descubre las mejores películas en cartelera</p>
+  </div>
+
+  <!-- Buscador -->
+  <div class="search-container mb-4">
+    <div class="input-group">
+      <span class="input-group-text bg-white">
+        <i class="bi bi-search"></i>
+      </span>
+      <input type="text" 
+             class="form-control" 
+             placeholder="Buscar por título..." 
+             [(ngModel)]="searchTerm"
+             (input)="searchMovies()">
+      <button *ngIf="searchTerm" class="btn btn-outline-secondary" (click)="clearSearch()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Días de la semana -->
+  <div class="days-container mb-4">
+    <div class="days-scroll">
+      <button *ngFor="let day of days" 
+              class="day-btn" 
+              [class.active]="selectedDay === day"
+              (click)="filterByDay(day)">
+        {{ day }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Resultados -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <app-spinner></app-spinner>
+  </div>
+
+  <div *ngIf="!isLoading && filteredMovies.length === 0" class="empty-state text-center py-5">
+    <i class="bi bi-emoji-frown display-1 text-muted"></i>
+    <h4 class="mt-3">No se encontraron películas</h4>
+    <p class="text-muted">Intenta con otro día o término de búsqueda</p>
+  </div>
+
+  <div *ngIf="!isLoading && filteredMovies.length > 0" class="movies-grid">
+    <app-movie-card *ngFor="let movie of filteredMovies" [movie]="movie"></app-movie-card>
+  </div>
+</div>

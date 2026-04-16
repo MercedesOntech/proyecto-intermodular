@@ -1,0 +1,12 @@
+<div class="card" [class.card-hover]="hoverEffect" [class.h-100]="true">
+  <img *ngIf="imageUrl && imagePosition === 'top'" [src]="imageUrl" class="card-img-top" [alt]="imageAlt">
+  <div class="card-body">
+    <h5 class="card-title">{{ title }}</h5>
+    <h6 *ngIf="subtitle" class="card-subtitle mb-2 text-muted">{{ subtitle }}</h6>
+    <ng-content></ng-content>
+  </div>
+  <img *ngIf="imageUrl && imagePosition === 'bottom'" [src]="imageUrl" class="card-img-bottom" [alt]="imageAlt">
+  <div *ngIf="footer" class="card-footer text-muted">
+    {{ footer }}
+  </div>
+</div>

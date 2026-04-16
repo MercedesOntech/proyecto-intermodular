@@ -1,1 +1,116 @@
-<p>header works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <!-- Botón toggle sidebar -->
+    <button class="btn btn-link text-white me-3" (click)="toggleMenu()">
+      <i class="bi bi-list fs-4"></i>
+    </button>
+
+    <!-- Logo y nombre empresa -->
+    <a class="navbar-brand d-flex align-items-center" routerLink="/home">
+      <img src="assets/images/logo.png" alt="Logo" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;">
+      <span class="fw-bold">ROMERO</span>
+    </a>
+
+    <!-- Botón toggle para móvil -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Contenido navbar -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <!-- Navbar links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/movies" routerLinkActive="active">Películas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/bar" routerLinkActive="active">Bar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/comments" routerLinkActive="active">Comentarios</a>
+        </li>
+        
+        <!-- Menús para employee y admin -->
+        <li class="nav-item dropdown" *ngIf="userRole === 'employee' || userRole === 'admin'">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            Administración
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/admin/movies">Registrar Película</a></li>
+            <li><a class="dropdown-item" routerLink="/admin/products">Registrar Producto</a></li>
+          </ul>
+        </li>
+
+        <!-- Menús solo para admin -->
+        <li class="nav-item" *ngIf="userRole === 'admin'">
+          <a class="nav-link" routerLink="/admin/users" routerLinkActive="active">Ver Usuarios</a>
+        </li>
+        <li class="nav-item" *ngIf="userRole === 'admin'">
+          <a class="nav-link" routerLink="/admin/create-user" routerLinkActive="active">Añadir Usuario</a>
+        </li>
+      </ul>
+
+      <!-- Buscador -->
+      <div class="search-container position-relative me-3">
+        <div class="input-group">
+          <input type="text" 
+                 class="form-control" 
+                 placeholder="Buscar películas, productos..." 
+                 [(ngModel)]="searchQuery"
+                 (input)="onSearch()"
+                 (blur)="closeSearchResults()">
+          <button class="btn btn-outline-light" type="button">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+        
+        <!-- Resultados búsqueda -->
+        <div class="search-results" *ngIf="showSearchResults && searchResults.length > 0">
+          <div *ngFor="let result of searchResults" 
+               class="search-result-item"
+               (click)="selectResult(result)">
+            <img [src]="result.imageUrl || 'assets/images/default.jpg'" [alt]="result.name" class="me-2">
+            <div>
+              <div class="fw-bold">{{ result.name }}</div>
+              <small class="text-muted">Película</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Usuario no logueado -->
+      <div class="d-flex" *ngIf="!isLoggedIn">
+        <button class="btn btn-outline-light me-2" (click)="goToLogin()">Iniciar Sesión</button>
+        <button class="btn btn-primary" (click)="goToRegister()">Registrarse</button>
+      </div>
+
+      <!-- Usuario logueado -->
+      <div class="user-menu" *ngIf="isLoggedIn" (click)="toggleUserMenu()">
+        <img src="assets/images/default-avatar.png" 
+             alt="User avatar" 
+             class="user-avatar rounded-circle">
+        
+        <div class="dropdown-menu-custom" *ngIf="showUserMenu">
+          <div class="dropdown-header">
+            <strong>{{ currentUser?.name }}</strong>
+            <small class="d-block text-muted">{{ currentUser?.email }}</small>
+          </div>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="goToSettings()">
+            <i class="bi bi-gear me-2"></i> Ajustes
+          </a>
+          <a class="dropdown-item" (click)="goToRegisterTarjet()">
+            <i class="bi bi-credit-card me-2"></i> Registrar Tarjeta
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" (click)="logout()">
+            <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
