@@ -14,13 +14,12 @@ export class App {
 */
 
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { MainLayoutComponent } from './layout/main-layout/main-layout';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MainLayoutComponent],
+  imports: [MainLayoutComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })

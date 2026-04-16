@@ -76,7 +76,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular/build:dev-server",
+          
           "configurations": {
             "production": {
               "buildTarget": "proyecto-intermodular-Mercedes-Romero:build:production"
